@@ -7,7 +7,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-xl font-semibold">EHS vendor</h1>
+            <h1 className="text-[16px] font-medium font-roboto">EHS vendor</h1>
           </div>
           <div className="flex items-center">
             <button className="p-2 rounded-full text-gray-400 hover:text-gray-500">
@@ -18,7 +18,7 @@ const Navbar = () => {
             </button>
             <div className="ml-3 relative">
               <div className="flex items-center">
-                <img className="h-8 w-8 rounded-full" src="/path-to-user-image.jpg" alt="User" />
+                <img className="h-8 w-8 rounded-full" src="/blaise.png" alt="User" />
                 <span className="ml-2 text-sm font-medium text-gray-700">Blaise Defloo</span>
               </div>
             </div>
