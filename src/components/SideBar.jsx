@@ -1,7 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsExpanded(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const menuItems = [
     { icon: '/icons/Home.svg', label: 'Tableau de bord' },
@@ -27,47 +40,58 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className={`bg-white h-screen ${isExpanded ? 'w-64' : 'w-20'} transition-all duration-300 ease-in-out overflow-hidden`}>
+    <div className={`bg-white dark:bg-gray-800 h-screen ${isExpanded ? 'w-64' : 'w-20'} transition-all duration-300 ease-in-out overflow-auto`}>
       <div className="p-4 flex items-center justify-between">
         <div className="flex items-center">
           <img src="/logo.svg" alt="App Logo" className="w-9 h-9 mr-2" />
           {isExpanded && (
-            <span className="text-xl font-semibold">
+            <span className="text-xl font-semibold text-gray-700 dark:text-white">
               <span className="text-[#1B8BCE]">APP</span>
               <span className="text-[#61AFDC]"> NAME</span>
             </span>
           )}
         </div>
-        <button
-          className="bg-white rounded-full p-1 shadow-md"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
+        <button className="pl-2.5" onClick={() => setIsExpanded(!isExpanded)}>
           <img src="/icons/toggle.svg" alt="Toggle" className="w-5 h-5" />
         </button>
       </div>
-      <nav className="mt-8">
+      <nav className={`mt-8 ${!isExpanded ? 'gap-y-4' : ''} flex flex-col`}>
         {menuItems.map((item, index) => (
-          <div key={index} className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
-            <img src={item.icon} alt={item.label} className="w-5 h-5" />
-            {isExpanded && <span className="ml-4 font-roboto text-sm text-[#626262]">{item.label}</span>}
+          <div
+            key={index}
+            className={`flex items-center ${isExpanded ? 'px-4 py-2' : 'justify-center'} hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer`}
+          >
+            <img
+              src={item.icon}
+              alt={item.label}
+              className={`${isExpanded ? 'w-5 h-5' : 'w-6 h-6'} transition-all duration-300`}
+            />
+            {isExpanded && <span className="ml-4 font-roboto text-sm text-gray-700 dark:text-gray-200">{item.label}</span>}
           </div>
         ))}
         <div className="mt-8 font-semibold px-4 py-2">
-          {isExpanded && <span className="font-roboto text-sm text-[#626262]">MANAGE</span>}
+          {isExpanded && <span className="font-roboto text-sm text-gray-700 dark:text-gray-200">MANAGE</span>}
         </div>
         {manageItems.map((item, index) => (
-          <div key={index} className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
-            <img src={item.icon} alt={item.label} className="w-5 h-5" />
-            {isExpanded && <span className="ml-4 font-roboto text-sm text-[#626262]">{item.label}</span>}
+          <div
+            key={index}
+            className={`flex items-center ${isExpanded ? 'px-4 py-2' : 'justify-center'} hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer`}
+          >
+            <img
+              src={item.icon}
+              alt={item.label}
+              className={`${isExpanded ? 'w-5 h-5' : 'w-6 h-6'} transition-all duration-300`}
+            />
+            {isExpanded && <span className="ml-4 font-roboto text-sm text-gray-700 dark:text-gray-200">{item.label}</span>}
           </div>
         ))}
       </nav>
-      <div className="absolute bottom-4 left-4 right-4">
+      <div className="absolute bottom-4 left-4 right-4 hidden sm:block overflow-x-auto overflow-y-hidden">
         {isExpanded && (
           <div className="text-xs">
-            <p className="font-roboto font-bold text-sm text-[#939393]">@ App name 2021</p>
-            <p className="font-roboto text-xs text-[#8A8A8A] leading-tight mt-2">
-              Lorem ipsum dolor sit amet, consectetur <br></br> adipiscing elit, sed do eiusmod tempor <br></br> incididunt ut.
+            <p className="font-roboto font-bold text-sm text-gray-500 dark:text-gray-400">@ App name 2021</p>
+            <p className="font-roboto text-xs text-gray-400 dark:text-gray-500 leading-tight mt-2">
+              Lorem ipsum dolor sit amet, consectetur <br /> adipiscing elit, sed do eiusmod tempor <br /> incididunt ut.
             </p>
           </div>
         )}

@@ -1,29 +1,49 @@
-import React from 'react';
-import { Bell, Settings } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import { Bell, Settings, Moon, Sun } from "lucide-react";
+import DropdownMenu from "./DropDownMenu";
 
 const Navbar = () => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [darkMode]);
+
   return (
-    <nav className="bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <h1 className="text-[16px] font-medium font-roboto">EHS vendor</h1>
-          </div>
-          <div className="flex items-center">
-            <button className="p-2 rounded-full text-gray-400 hover:text-gray-500">
-              <Bell size={20} />
-            </button>
-            <button className="p-2 rounded-full text-gray-400 hover:text-gray-500 ml-2">
-              <Settings size={20} />
-            </button>
-            <div className="ml-3 relative">
-              <div className="flex items-center">
-                <img className="h-8 w-8 rounded-full" src="/blaise.png" alt="User" />
-                <span className="ml-2 text-sm font-medium text-gray-700">Blaise Defloo</span>
-              </div>
-            </div>
-          </div>
-        </div>
+    <nav className="bg-white dark:bg-gray-800 shadow-md flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16">
+      <div className="flex items-center">
+        <h1 className="text-lg sm:text-xl font-medium font-roboto dark:text-white">
+          EHS Vendor
+        </h1>
+      </div>
+      <div className="flex items-center space-x-2 sm:space-x-4">
+        <button
+          onClick={toggleDarkMode}
+          className="p-2 rounded-full text-gray-400 hover:text-gray-500 dark:text-gray-200 dark:hover:text-white"
+        >
+          {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
+
+        <button className="p-2 rounded-full text-gray-400 hover:text-gray-500 dark:text-gray-200 dark:hover:text-white">
+          <Bell size={20} />
+        </button>
+
+        <button className="p-2 rounded-full text-gray-400 hover:text-gray-500 dark:text-gray-200 dark:hover:text-white">
+          <Settings size={20} />
+        </button>
+
+        <DropdownMenu
+          userName="Blaise Defloo"
+          userEmail="besix.group@besix.be"
+        />
       </div>
     </nav>
   );
